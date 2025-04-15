@@ -1,0 +1,27 @@
+/* 
+.card {
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 14px;
+}
+
+.card-buttons {
+    margin-top: 10px;
+}
+
+.card:last-child {
+    margin-right: 0;
+} */

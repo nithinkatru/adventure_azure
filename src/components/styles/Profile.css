@@ -1,0 +1,20 @@
+.profile {
+    margin-top: 20px;
+}
+
+.profile h2 {
+    margin-bottom: 10px;
+}
+
+.profile p {
+    margin-bottom: 10px;
+}
+
+.profile .btn {
+    margin-top: 20px;
+    margin-right: 10px;
+}
+
+.profile .btn-primary {
+    width: 120px;
+}

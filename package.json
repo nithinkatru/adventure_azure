@@ -1,0 +1,68 @@
+{
+  "name": "adventuregear",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@chakra-ui/react": "^3.14.2",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@fontsource/montserrat": "^5.2.5",
+    "@mui/icons-material": "^6.4.9",
+    "@mui/material": "^6.4.9",
+    "@stripe/react-stripe-js": "^3.5.1",
+    "@stripe/stripe-js": "^5.10.0",
+    "adventuregear": "file:",
+    "axios": "^1.8.4",
+    "bootstrap": "^5.3.3",
+    "cra-template": "1.2.0",
+    "emailjs-com": "^3.2.0",
+    "framer-motion": "^12.6.2",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
+    "qrcode": "^1.5.4",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.0.0",
+    "react-bootstrap": "^2.10.9",
+    "react-context-api": "^1.0.2",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^7.1.5",
+    "react-scripts": "5.0.1",
+    "react-toastify": "^11.0.5",
+    "recharts": "^2.15.1",
+    "speakeasy": "^2.0.0",
+    "styled-components": "^6.1.15",
+    "web-vitals": "^4.2.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.0",
+    "postcss": "^8.5.2",
+    "prefixer": "^0.0.3",
+    "tailwindcss": "^4.0.6"
+  }
+}

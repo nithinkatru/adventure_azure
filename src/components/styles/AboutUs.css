@@ -1,0 +1,56 @@
+
+.aboutus{
+display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.about-us-content {
+  text-align: center;
+  margin-top: 40px;
+}
+.mission-section {
+    background-color: #f0f0f0; 
+    padding: 50px;
+    text-align: center;
+  }
+  .mission-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  .features-section {
+
+    display: flex;
+    justify-content: space-around;
+    padding: 30px;
+  }.feature {
+  
+    text-align: center;
+    width: 30%; 
+  }
+  
+  .feature-icon {
+    margin-bottom: 20px;
+  }.feature-icon img {
+    width: 80px; 
+    height: 80px;
+  }
+  .feature-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+.team-members {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.team-member {
+  margin: 10px;
+}
+.team-member img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
