@@ -1,6 +1,4 @@
-/*****************************************************************
- * src/pages/AdminDashboard.jsx  |  Black + Yellow | Montserrat
- *****************************************************************/
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAdminDashboardData, logoutUser } from '../api';

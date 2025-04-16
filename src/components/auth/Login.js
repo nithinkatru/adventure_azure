@@ -1,9 +1,3 @@
-/***********************************************************************
- * src/pages/Login.jsx
- *
- * Phase 1: Show Email & Password. If server says 2FA is required,
- * hide them and show an OTP text field in blue label.
- ***********************************************************************/
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -17,31 +11,63 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@mui/material';
-import '../styles/Login.css'; 
+import '../styles/Login.css';
 import { loginUser } from '../api';
 
 export default function Login() {
   const navigate = useNavigate();
 
-  // Form fields
+  // Input fields
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [totpCode, setTotpCode] = useState('');
   const [remember, setRemember] = useState(false);
 
-  // UI states
+  // Validation errors
+  const [errors, setErrors] = useState({});
+
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
-  const [needsTOTP, setNeedsTOTP] = useState(false); // decides if we hide email/pw
-  const [isSuccess, setIsSuccess] = useState(false); // green or red Alert
+  const [needsTOTP, setNeedsTOTP] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // Simple email regex for validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   async function handleLogin(e) {
     e.preventDefault();
 
-    // If we haven't entered email/password yet, do a simple check
-    if (!needsTOTP && (!email || !password)) {
-      setMessage('Please fill in Email & Password.');
-      setIsSuccess(false);
+    // Reset errors
+    setErrors({});
+    let valid = true;
+    let validationErrors = {};
+
+    if (!needsTOTP) {
+      if (!email) {
+        validationErrors.email = 'Email is required.';
+        valid = false;
+      } else if (!emailRegex.test(email)) {
+        validationErrors.email = 'Enter a valid email address.';
+        valid = false;
+      }
+      if (!password) {
+        validationErrors.password = 'Password is required.';
+        valid = false;
+      }
+    } else {
+      if (!totpCode) {
+        validationErrors.totpCode = 'OTP code is required.';
+        valid = false;
+      }
+      // Enforce exactly 6 digits for the OTP code
+      else if (!/^\d{6}$/.test(totpCode)) {
+        validationErrors.totpCode = 'Enter a valid 6-digit OTP code.';
+        valid = false;
+      }
+    }
+
+    if (!valid) {
+      setErrors(validationErrors);
       return;
     }
 
@@ -52,39 +78,33 @@ export default function Login() {
     try {
       let credentials;
       if (!needsTOTP) {
-        // Attempt #1: user only has email/password
         credentials = { email, password };
       } else {
-        // Attempt #2: user must have TOTP code (server told us)
         credentials = { email, password, token: totpCode };
       }
 
       const data = await loginUser(credentials);
 
-      // If success:
       setMessage('Login success!');
       setIsSuccess(true);
 
-      // Example redirect logic
       if (data.user?.role === 'admin') {
         navigate('/admin/dashboard');
       } else {
         navigate('/');
       }
     } catch (err) {
-      // Check server's message
-      const errMsg = err?.response?.data?.message || '';
+      // Get the exact error from response if available.
+      const errMsg = err.response && err.response.data && err.response.data.message 
+        ? err.response.data.message 
+        : err.message || 'Login failed. Try again.';
       if (errMsg === 'TOTP code required (2FA enabled)') {
-        // The server says we must provide TOTP
         setNeedsTOTP(true);
-        // Switch to phase 2: hide email/pw, show TOTP input
         setMessage('Please enter the OTP code!');
-        setIsSuccess(false);
       } else {
-        // Other login errors
-        setMessage(err.message || 'Login failed. Try again.');
-        setIsSuccess(false);
+        setMessage(errMsg);
       }
+      setIsSuccess(false);
     } finally {
       setBusy(false);
     }
@@ -104,7 +124,6 @@ export default function Login() {
           Login
         </Typography>
 
-        {/* If there's a message, show success (green) or error (red) */}
         {message && (
           <Alert severity={isSuccess ? 'success' : 'error'} sx={{ mb: 2 }}>
             {busy ? (
@@ -128,6 +147,8 @@ export default function Login() {
                 sx={{ mb: 2 }}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                error={!!errors.email}
+                helperText={errors.email}
               />
               {/* Password Field */}
               <TextField
@@ -137,8 +158,9 @@ export default function Login() {
                 sx={{ mb: 2 }}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                error={!!errors.password}
+                helperText={errors.password}
               />
-
               <FormControlLabel
                 control={
                   <Checkbox
@@ -159,8 +181,10 @@ export default function Login() {
               sx={{ mb: 2 }}
               value={totpCode}
               onChange={(e) => setTotpCode(e.target.value)}
+              error={!!errors.totpCode}
+              helperText={errors.totpCode}
               InputLabelProps={{
-                sx: { color: 'blue' }, // label in blue
+                sx: { color: 'blue' },
               }}
             />
           )}
@@ -173,14 +197,13 @@ export default function Login() {
             sx={{
               borderRadius: 0,
               bgcolor: '#000',
-              color: '#FFD600'
+              color: '#FFD600',
             }}
           >
             {busy ? 'Logging in...' : 'Login'}
           </Button>
         </form>
 
-        {/* Sign up link */}
         <Typography variant="body2" sx={{ mt: 2 }}>
           Don&apos;t have an account?{' '}
           <Button

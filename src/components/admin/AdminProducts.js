@@ -1,6 +1,4 @@
-/*****************************************************************
- * AdminProducts.jsx | Black · Yellow · White | Montserrat
- *****************************************************************/
+
 import React, { useEffect, useMemo, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import {

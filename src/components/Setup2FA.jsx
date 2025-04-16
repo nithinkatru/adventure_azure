@@ -1,14 +1,7 @@
-/********************************************************************
- * Setup2FA.jsx
- * 
- * Minimal example for a "Enable 2FA" page. The user sees a button
- * to generate a TOTP secret + QR code, and then a field to verify
- * the 6-digit code from an authenticator app. On success, you 
- * typically set user.twoFactorEnabled = true in the DB.
- ********************************************************************/
+
 import React, { useState, useEffect } from 'react';
 import { enableTwoFactor, verifyTwoFactor } from '../api'; 
-import { getUser } from '../services/authService'; // or however you fetch the user
+import { getUser } from '../services/authService'; 
 import {
   Box,
   Button,
@@ -19,14 +12,14 @@ import {
 } from '@mui/material';
 
 export default function Setup2FA() {
-  const [email, setEmail] = useState('');    // user’s email
+  const [email, setEmail] = useState('');    
   const [qrDataURL, setQrDataURL] = useState('');
-  const [totpCode, setTotpCode] = useState(''); // the 6-digit code
+  const [totpCode, setTotpCode] = useState(''); 
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    // If your authService stores user info with 'email'
+   
     const currentUser = getUser(); 
     if (currentUser && currentUser.email) {
       setEmail(currentUser.email);
@@ -39,9 +32,9 @@ export default function Setup2FA() {
     setBusy(true);
 
     try {
-      // call your API method: enableTwoFactor(email)
+      
       const res = await enableTwoFactor(email);
-      // server should return { qrDataURL, otpauthURL, message }
+      
       setQrDataURL(res.qrDataURL);
       setMessage(res.message || 'QR generated. Scan it, then enter code below.');
     } catch (err) {
@@ -59,9 +52,9 @@ export default function Setup2FA() {
 
     setBusy(true);
     try {
-      // call your API method: verifyTwoFactor(email, code)
+      
       const res = await verifyTwoFactor(email, totpCode);
-      // server typically returns { message: '2FA verified' }
+      
       setMessage(res.message || '2FA verified!');
     } catch (err) {
       setMessage(err.message || 'Verification failed. Check your code and try again.');

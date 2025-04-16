@@ -1,34 +1,46 @@
-// src/components/user/Home.jsx
+/*********************************************************************
+ * Home.jsx
+ *
+ * This file defines a React component for the Home page.
+ * It uses Material‑UI components, GlobalStyles, and responsive breakpoints
+ * to enforce an edge‑to‑edge layout that adapts to mobile, tablet, and desktop.
+ *
+ * Author: Your Name
+ * Date: YYYY-MM-DD
+ *********************************************************************/
+
 import React from 'react';
 import {
+  GlobalStyles,
   Box,
   Typography,
   Button,
   Grid,
-  GlobalStyles,
   IconButton,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import '../styles/Home.css';
 
-/* 
-  Import your assets – ensure filenames and paths match exactly.
-  Replace these with adventure gear–related images and video.
-*/
-import heroImg from '../assets/home.jpg'; // Hero background image
-import equipmentImg from '../assets/productssubcatergory.jpg'; // Equipment image
-import apparelImg from '../assets/apparel.jpg'; // Apparel image
-import featuredImg1 from '../assets/highlightImg.jpg'; // Featured gear image 1
-import featuredImg2 from '../assets/highlightImg1.jpg'; // Featured gear image 2
-import featuredImg3 from '../assets/bikingGear.jpg'; // Featured gear image 3
-import sampleVideo from '../assets/sampleVideo.mp4'; // Adventure video
 
-/* 
-  Import the ScrollingMarquee component.
-  (Ensure your ScrollingMarquee.jsx is updated to match your adventure theme.)
-*/
+import heroImg from '../assets/home.jpg'; 
+import equipmentImg from '../assets/productssubcatergory.jpg'; 
+import apparelImg from '../assets/apparel.jpg'; 
+import featuredImg1 from '../assets/highlightImg.jpg'; 
+import featuredImg2 from '../assets/highlightImg1.jpg'; 
+import featuredImg3 from '../assets/bikingGear.jpg'; 
+import sampleVideo from '../assets/sampleVideo.mp4'; 
+
+
 import ScrollingMarquee from './Home/ScrollingMarquee';
+
+
+const fullWidthBoxStyle = {
+  width: '100vw',
+  margin: 0,
+  padding: 0,
+  overflowX: 'hidden',
+};
 
 const Home = () => {
   return (
@@ -36,13 +48,15 @@ const Home = () => {
       {/* Remove default browser margins and paddings */}
       <GlobalStyles styles={{ body: { margin: 0, padding: 0 } }} />
 
-      <Box className="home-page" sx={{ width: '100%', overflow: 'hidden' }}>
-        {/* ----------------- HERO SECTION ----------------- */}
+      {/* Outer container enforces edge‑to‑edge layout */}
+      <Box className="home-page" sx={fullWidthBoxStyle}>
+
+        {}
         <Box
           sx={{
             position: 'relative',
             width: '100%',
-            height: '100vh',
+            height: { xs: '70vh', md: '100vh' },
             backgroundImage: `url(${heroImg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -53,79 +67,108 @@ const Home = () => {
             alignItems: 'center',
           }}
         >
-          <Typography
-            variant="h2"
+          {/* Dark Overlay */}
+          <Box
             sx={{
-              color: '#FFD700',
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              fontSize: { xs: '2rem', md: '4rem' },
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              bgcolor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          />
+
+          {/* Hero Text Container */}
+          <Box
+            sx={{
+              position: 'relative',
+              zIndex: 1,
               textAlign: 'center',
-              mb: 2,
+              px: 2,
+              maxWidth: { xs: '90%', md: '60%' },
             }}
           >
-            Welcome to Adventure Hub
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              color: '#fff',
-              fontSize: { xs: '1rem', md: '1.2rem' },
-              mb: 3,
-              letterSpacing: 1,
-            }}
-          >
-            Your Ultimate Destination for Adventure Gear
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            <Button
-              component={Link}
-              to="/products/equipment"
-              variant="contained"
+            <Typography
+              variant="h2"
               sx={{
-                backgroundColor: '#000',
-                color: '#fff',
-                textTransform: 'uppercase',
+                color: '#FFD600',
                 fontWeight: 'bold',
-                borderRadius: 0,
-                px: 3,
-                py: 1.5,
-                boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-                '&:hover': {
-                  backgroundColor: '#333',
-                  boxShadow: '0 6px 12px rgba(0,0,0,0.25)',
-                },
+                textTransform: 'uppercase',
+                fontSize: { xs: '2rem', sm: '3rem', md: '4rem' },
+                mb: 2,
               }}
             >
-              Explore Gear
-            </Button>
-            <Button
-              component={Link}
-              to="/products/new-arrivals"
-              variant="contained"
+              Welcome to Adventure Hub
+            </Typography>
+            <Typography
+              variant="body1"
               sx={{
-                backgroundColor: '#000',
                 color: '#fff',
-                textTransform: 'uppercase',
-                fontWeight: 'bold',
-                borderRadius: 0,
-                px: 3,
-                py: 1.5,
-                boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-                '&:hover': {
-                  backgroundColor: '#333',
-                  boxShadow: '0 6px 12px rgba(0,0,0,0.25)',
-                },
+                fontSize: { xs: '1rem', md: '1.2rem' },
+                mb: 3,
+                letterSpacing: 1,
               }}
             >
-              New Arrivals
-            </Button>
+              Your Ultimate Destination for Adventure Gear
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+              }}
+            >
+              <Button
+                component={Link}
+                to="/products/equipment"
+                variant="contained"
+                sx={{
+                  backgroundColor: '#000',
+                  color: '#fff',
+                  textTransform: 'uppercase',
+                  fontWeight: 'bold',
+                  borderRadius: 0,
+                  px: { xs: 2, md: 3 },
+                  py: { xs: 1, md: 1.5 },
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                  '&:hover': {
+                    backgroundColor: '#333',
+                    boxShadow: '0 6px 12px rgba(0,0,0,0.25)',
+                  },
+                }}
+              >
+                Explore Gear
+              </Button>
+              <Button
+                component={Link}
+                to="/products/new-arrivals"
+                variant="contained"
+                sx={{
+                  backgroundColor: '#000',
+                  color: '#fff',
+                  textTransform: 'uppercase',
+                  fontWeight: 'bold',
+                  borderRadius: 0,
+                  px: { xs: 2, md: 3 },
+                  py: { xs: 1, md: 1.5 },
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                  '&:hover': {
+                    backgroundColor: '#333',
+                    boxShadow: '0 6px 12px rgba(0,0,0,0.25)',
+                  },
+                }}
+              >
+                New Arrivals
+              </Button>
+            </Box>
           </Box>
         </Box>
 
-        {/* ----------------- EQUIPMENT & APPAREL SECTION ----------------- */}
-        <Box sx={{ backgroundColor: '#fff', py: 8 }}>
-          <Grid container spacing={3} sx={{ px: { xs: 2, md: 8 } }}>
+        {}
+        <Box sx={{ backgroundColor: '#fff', py: { xs: 4, md: 8 }, width: '100%' }}>
+          <Grid container spacing={3}>
             {/* EQUIPMENT */}
             <Grid
               item
@@ -133,7 +176,7 @@ const Home = () => {
               md={6}
               sx={{
                 position: 'relative',
-                height: { xs: '300px', md: '500px' },
+                height: { xs: '250px', md: '500px' },
                 overflow: 'hidden',
               }}
             >
@@ -141,7 +184,11 @@ const Home = () => {
                 component="img"
                 src={equipmentImg}
                 alt="Equipment"
-                sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                }}
               />
               <Box
                 sx={{
@@ -155,22 +202,27 @@ const Home = () => {
               >
                 <Typography
                   variant="h4"
-                  sx={{ fontWeight: 'bold', mb: 1, color: '#000' }}
+                  sx={{
+                    fontWeight: 'bold',
+                    mb: 1,
+                    color: '#000',
+                    fontSize: { xs: '1.2rem', md: '1.8rem' },
+                  }}
                 >
                   Equipment
                 </Typography>
-                <Typography
+                <Button
                   component={Link}
                   to="/products/equipment"
                   sx={{
                     textDecoration: 'none',
                     color: '#000',
-                    fontSize: '1rem',
+                    fontSize: { xs: '0.8rem', md: '1rem' },
                     fontWeight: 'bold',
                   }}
                 >
                   Shop Now
-                </Typography>
+                </Button>
               </Box>
             </Grid>
 
@@ -181,15 +233,19 @@ const Home = () => {
               md={6}
               sx={{
                 position: 'relative',
-                height: { xs: '300px', md: '500px' },
+                height: { xs: '250px', md: '500px' },
                 overflow: 'hidden',
               }}
             >
               <Box
                 component="img"
                 src={apparelImg}
-                alt="Adventure Apparel"
-                sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                alt="Apparel"
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                }}
               />
               <Box
                 sx={{
@@ -203,50 +259,56 @@ const Home = () => {
               >
                 <Typography
                   variant="h4"
-                  sx={{ fontWeight: 'bold', mb: 1, color: '#000' }}
+                  sx={{
+                    fontWeight: 'bold',
+                    mb: 1,
+                    color: '#000',
+                    fontSize: { xs: '1.2rem', md: '1.8rem' },
+                  }}
                 >
                   Apparel
                 </Typography>
-                <Typography
+                <Button
                   component={Link}
                   to="/products/apparel"
                   sx={{
                     textDecoration: 'none',
                     color: '#000',
-                    fontSize: '1rem',
+                    fontSize: { xs: '0.8rem', md: '1rem' },
                     fontWeight: 'bold',
                   }}
                 >
                   Shop Now
-                </Typography>
+                </Button>
               </Box>
             </Grid>
           </Grid>
         </Box>
 
-        {/* ----------------- CONTINUOUS SCROLLING MARQUEE ----------------- */}
-        <ScrollingMarquee />
+        {}
+        <Box sx={{ width: '100%' }}>
+          <ScrollingMarquee />
+        </Box>
 
-        {/* ----------------- FEATURED GEAR SECTION ----------------- */}
-        <Box sx={{ textAlign: 'center', py: 8 }}>
+        {}
+        <Box sx={{ textAlign: 'center', py: { xs: 4, md: 8 }, width: '100%' }}>
           <Box sx={{ mt: 4 }}>
-            <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
+            <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1, fontSize: { xs: '1.5rem', md: '2rem' } }}>
               Featured Gear
             </Typography>
-            <Typography
+            <Button
               component={Link}
               to="/products/featured"
               sx={{
                 textDecoration: 'none',
                 color: '#000',
-                fontSize: '1rem',
+                fontSize: { xs: '0.8rem', md: '1rem' },
                 fontWeight: 'bold',
-                display: 'inline-block',
                 mb: 2,
               }}
             >
               View All
-            </Typography>
+            </Button>
           </Box>
 
           <Box
@@ -258,7 +320,7 @@ const Home = () => {
               mt: 4,
             }}
           >
-            {/* Left Arrow */}
+            {/* Left Navigation Arrow */}
             <IconButton
               sx={{
                 position: 'absolute',
@@ -269,12 +331,13 @@ const Home = () => {
                 color: '#000',
                 backgroundColor: '#fff',
                 '&:hover': { backgroundColor: '#f0f0f0' },
+                display: { xs: 'none', md: 'flex' },
               }}
             >
               <ChevronLeft />
             </IconButton>
 
-            <Grid container spacing={2} justifyContent="center">
+            <Grid container spacing={0} justifyContent="center">
               <Grid
                 item
                 xs={12}
@@ -289,7 +352,12 @@ const Home = () => {
                   component="img"
                   src={featuredImg1}
                   alt="Gear 1"
-                  sx={{ maxWidth: '200px', height: 'auto' }}
+                  sx={{
+                    width: '100%',
+                    maxWidth: '200px',
+                    height: 'auto',
+                    display: 'block',
+                  }}
                 />
               </Grid>
               <Grid
@@ -306,7 +374,12 @@ const Home = () => {
                   component="img"
                   src={featuredImg2}
                   alt="Gear 2"
-                  sx={{ maxWidth: '200px', height: 'auto' }}
+                  sx={{
+                    width: '100%',
+                    maxWidth: '200px',
+                    height: 'auto',
+                    display: 'block',
+                  }}
                 />
               </Grid>
               <Grid
@@ -323,12 +396,17 @@ const Home = () => {
                   component="img"
                   src={featuredImg3}
                   alt="Gear 3"
-                  sx={{ maxWidth: '200px', height: 'auto' }}
+                  sx={{
+                    width: '100%',
+                    maxWidth: '200px',
+                    height: 'auto',
+                    display: 'block',
+                  }}
                 />
               </Grid>
             </Grid>
 
-            {/* Right Arrow */}
+            {/* Right Navigation Arrow */}
             <IconButton
               sx={{
                 position: 'absolute',
@@ -339,6 +417,7 @@ const Home = () => {
                 color: '#000',
                 backgroundColor: '#fff',
                 '&:hover': { backgroundColor: '#f0f0f0' },
+                display: { xs: 'none', md: 'flex' },
               }}
             >
               <ChevronRight />
@@ -346,25 +425,28 @@ const Home = () => {
           </Box>
         </Box>
 
-        {/* ----------------- ADVENTURE VIDEO SECTION (YELLOW BACKGROUND) ----------------- */}
+        {}
         <Box
           sx={{
             display: 'flex',
             backgroundColor: '#FFD700',
             mt: 4,
-            minHeight: '500px',
+            minHeight: { xs: '400px', md: '500px' },
+            width: '100%',
+            flexDirection: { xs: 'column', md: 'row' },
           }}
         >
           {/* Text Section */}
           <Box
             sx={{
-              flex: '1 1 50%',
+              flex: 1,
               color: '#000',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               pl: { xs: 2, md: 6 },
               pr: { xs: 2, md: 6 },
+              textAlign: { xs: 'center', md: 'left' },
             }}
           >
             <Typography
@@ -373,13 +455,14 @@ const Home = () => {
                 fontWeight: 'bold',
                 mb: 2,
                 textTransform: 'uppercase',
+                fontSize: { xs: '1.5rem', md: '2rem' },
               }}
             >
               Gear Up for Adventure
             </Typography>
-            <Typography sx={{ mb: 3 }}>
+            <Typography sx={{ mb: 3, fontSize: { xs: '0.9rem', md: '1rem' } }}>
               From rugged equipment to versatile apparel, our selection is built for those who crave the wild.
-              Explore our top-quality gear designed to withstand every adventure.
+              Explore our top‑quality gear designed to withstand every adventure.
             </Typography>
             <Button
               component={Link}
@@ -393,7 +476,6 @@ const Home = () => {
                 borderRadius: 0,
                 px: 2,
                 py: 1,
-                width: 'fit-content',
                 boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
                 '&:hover': {
                   backgroundColor: '#333',
@@ -407,9 +489,10 @@ const Home = () => {
           {/* Video Section */}
           <Box
             sx={{
-              flex: '1 1 50%',
+              flex: 1,
               position: 'relative',
               overflow: 'hidden',
+              height: { xs: '300px', md: '100%' },
             }}
           >
             <Box
@@ -427,8 +510,8 @@ const Home = () => {
           </Box>
         </Box>
 
-        
-        
+        {}
+        {}
       </Box>
     </>
   );

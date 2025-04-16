@@ -1,12 +1,3 @@
-/*****************************************************************
- * src/pages/Register.jsx
- *
- * - User registers with name, email, password, role, phoneNumber
- * - Server returns TOTP secret in form of otpauthURL & qrDataURL
- * - We show a QR code; the user scans it in Microsoft Authenticator
- * - They enter the 6-digit code => we call verify2FA => if correct,
- *   we log them in.
- *****************************************************************/
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -24,10 +15,8 @@ import {
   FormControl,
 } from '@mui/material';
 import { styled } from '@mui/system';
-// We use qrcode.react to build a QR if server doesn't supply base64
-import { QRCodeCanvas } from 'qrcode.react'; 
+import { QRCodeCanvas } from 'qrcode.react';
 
-// Import your new TOTP-based endpoints
 import { registerUser, loginUser, verifyTOTP } from '../api';
 import profileDp from '../assets/profile.jpeg';
 import '../styles/Register.css';
@@ -75,20 +64,55 @@ export default function Register() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
 
+  // Form validation state
+  const [errors, setErrors] = useState({});
+
   // UI states
   const [message, setMessage] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  // TOTP step
+  // TOTP step states
   const [showTOTP, setShowTOTP] = useState(false);
-  const [otpauthURL, setOtpauthURL] = useState(''); 
-  const [qrDataURL, setQrDataURL] = useState('');   
+  const [otpauthURL, setOtpauthURL] = useState('');
+  const [qrDataURL, setQrDataURL] = useState('');
   const [otpCode, setOtpCode] = useState('');
 
-  // 1) Register user => get TOTP
+  // Regular Expressions for validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // Allows an optional plus, digits, spaces and dashes, requires between 10 and 15 characters.
+  const phoneRegex = /^\+?[0-9\s\-]{10,15}$/;
+
+  // Handle registration with validation.
   async function handleRegister(e) {
     e.preventDefault();
     setMessage('');
+    setErrors({});
+
+    let formErrors = {};
+    if (!name.trim()) formErrors.name = 'Name is required.';
+    
+    if (!email.trim()) {
+      formErrors.email = 'Email is required.';
+    } else if (!emailRegex.test(email)) {
+      formErrors.email = 'Please enter a valid email address.';
+    }
+    
+    if (!password) {
+      formErrors.password = 'Password is required.';
+    } else if (password.length < 6) {
+      formErrors.password = 'Password must be at least 6 characters long.';
+    }
+    
+    if (!phoneNumber.trim()) {
+      formErrors.phoneNumber = 'Phone number is required.';
+    } else if (!phoneRegex.test(phoneNumber)) {
+      formErrors.phoneNumber = 'Please enter a valid phone number (10-15 digits, spaces or dashes allowed).';
+    }
+
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
 
     try {
       const userData = {
@@ -99,11 +123,10 @@ export default function Register() {
         phoneNumber,
       };
 
-      // register => server returns { message, user, otpauthURL, qrDataURL }
+      // registerUser returns { message, user, otpauthURL, qrDataURL }
       const res = await registerUser(userData);
       setMessage(res.message || 'Registered!');
-
-      // If server returns TOTP data => show the TOTP step
+      
       if (res.otpauthURL) {
         setOtpauthURL(res.otpauthURL);
         setShowTOTP(true);
@@ -111,15 +134,17 @@ export default function Register() {
       if (res.qrDataURL) {
         setQrDataURL(res.qrDataURL);
       }
-
-      // If you prefer to do immediate login if TOTP isn't mandatory,
-      // you could do that here if no TOTP is returned.
     } catch (err) {
-      setMessage(err.message || 'Registration failed. Try again.');
+      const errorMsg = err?.response?.data?.message || err.message || '';
+      if (errorMsg.toLowerCase().includes('already')) {
+        setMessage('Account already created');
+      } else {
+        setMessage(errorMsg || 'Registration failed. Try again.');
+      }
     }
   }
 
-  // 2) Verify TOTP code => if correct, login
+  // Verify TOTP and log in the user.
   async function handleVerifyTOTP() {
     if (!otpCode) {
       return setMessage('Please enter the 6-digit code from Microsoft Authenticator.');
@@ -127,16 +152,12 @@ export default function Register() {
     setMessage('');
 
     try {
-      // The server route is POST /auth/verify-2fa => so we call verifyTOTP
-      // which is now updated to axios.post('/auth/verify-2fa', ...)
       const verifyRes = await verifyTOTP({ email, token: otpCode });
       setMessage(verifyRes.message || 'TOTP verified successfully.');
 
-      // If success, login
       const creds = { email, password, token: otpCode };
       const loginRes = await loginUser(creds);
 
-      // If user is admin => admin dashboard, else home
       if (loginRes.user?.role === 'admin') navigate('/admin/dashboard');
       else navigate('/');
     } catch (err) {
@@ -188,7 +209,7 @@ export default function Register() {
           </Alert>
         )}
 
-        {/* Step 1: Normal register form */}
+        {/* Step 1: Registration Form */}
         {!showTOTP && (
           <form onSubmit={handleRegister} style={{ width: '100%' }}>
             <StyledTextField
@@ -196,6 +217,8 @@ export default function Register() {
               fullWidth
               value={name}
               onChange={(e) => setName(e.target.value)}
+              error={!!errors.name}
+              helperText={errors.name}
             />
 
             <StyledTextField
@@ -204,6 +227,8 @@ export default function Register() {
               fullWidth
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              error={!!errors.email}
+              helperText={errors.email}
             />
 
             <StyledTextField
@@ -212,6 +237,8 @@ export default function Register() {
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              error={!!errors.password}
+              helperText={errors.password}
             />
 
             <StyledTextField
@@ -219,6 +246,8 @@ export default function Register() {
               fullWidth
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
+              error={!!errors.phoneNumber}
+              helperText={errors.phoneNumber}
             />
 
             <FormControl fullWidth sx={{ mb: 2 }}>
@@ -250,15 +279,13 @@ export default function Register() {
           </form>
         )}
 
-        {/* Step 2: TOTP step if we have an otpauthURL */}
+        {/* Step 2: TOTP Verification */}
         {showTOTP && (
           <Box sx={{ mt: 2, width: '100%' }}>
             <Typography variant="h6" sx={{ mb: 1 }}>
               Scan this code in Microsoft Authenticator
             </Typography>
 
-            {/* If server gave us a base64-coded image, we show <img />;
-                otherwise, we build a QR from otpauthURL via qrcode.react */}
             {qrDataURL ? (
               <img
                 src={qrDataURL}
@@ -275,7 +302,7 @@ export default function Register() {
             )}
 
             <Typography variant="body1" sx={{ mb: 2 }}>
-              Open Microsoft Authenticator (or any TOTP app), add a new account, and scan the code. 
+              Open Microsoft Authenticator (or any TOTP app), add a new account, and scan the code.
               Then enter the 6-digit code below:
             </Typography>
 

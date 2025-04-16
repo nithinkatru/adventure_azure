@@ -40,7 +40,7 @@ const HomeCarousel = () => {
           width: '100%',
           maxWidth: '1400px',
           margin: '0 auto',
-          zIndex: 1, // ensure text is above overlay
+          zIndex: 1, 
         }}
       >
         {/* Left Text Section */}
@@ -51,7 +51,7 @@ const HomeCarousel = () => {
           sx={{
             color: 'white',
             textAlign: { xs: 'center', md: 'left' },
-            // Simple fade-in or slide-up transition
+            
             opacity: 0,
             animation: 'fadeInUp 1s forwards ease',
             '@keyframes fadeInUp': {
@@ -85,7 +85,7 @@ const HomeCarousel = () => {
           sx={{
             mt: { xs: '20px', md: 0 },
             opacity: 0,
-            animation: 'fadeInUp 1s 0.3s forwards ease', // slightly delayed
+            animation: 'fadeInUp 1s 0.3s forwards ease', 
             '@keyframes fadeInUp': {
               to: { opacity: 1, transform: 'translateY(0)' },
               from: { opacity: 0, transform: 'translateY(10px)' },

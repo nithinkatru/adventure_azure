@@ -1,4 +1,3 @@
-// src/pages/AboutUs.jsx
 import React from 'react';
 import {
   Box,
@@ -8,109 +7,173 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-// Example placeholder images
-import placeholderImg from '../assets/teammember.jpg';
+import { Link } from 'react-router-dom';
 
-export default function AboutUs() {
+
+import teamMember1 from '../assets/teammember1.jpg';
+import teamMember2 from '../assets/teammember2.jpg';
+import teamMember3 from '../assets/teammember5.jpg';
+
+const AboutUs = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+ 
+  const teamMembers = [
+    { name: 'Shrishika Ramaiah', role: 'Founder & CEO', image: teamMember1 },
+    { name: 'Venkata Mahesh', role: 'Head of Product', image: teamMember2 },
+    { name: 'Naveen', role: 'Human Resources', image: teamMember3 },
+  ];
+
   return (
-    <Box sx={{ width: '100%', overflow: 'hidden', m: 0, p: 0 }}>
-      {/* 1) BIG YELLOW SECTION: Left text, right black & white image */}
+    <Box sx={{ m: 0, p: 0, width: '100%' }}>
+      {}
       <Box
         sx={{
           display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          backgroundColor: '#FFD600', // bright Duke yellow
+          flexDirection: { xs: 'column', md: 'row' },
+          width: '100%',
+       
+          minHeight: { xs: '80vh', md: '100vh' },
+          backgroundColor: '#FFD600',
           color: '#000',
-          minHeight: '80vh',
-          alignItems: 'center',
-          justifyContent: 'space-between',
         }}
       >
-        {/* Left Text */}
-        <Box sx={{ flex: 1, p: { xs: 3, md: 6 } }}>
+        {/* LEFT: Text Section */}
+        <Box
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            p: { xs: 3, md: 6 },
+          }}
+        >
           <Typography
             variant="h3"
-            sx={{ fontWeight: 'bold', mb: 3, lineHeight: 1.2 }}
+            sx={{
+              fontWeight: 'bold',
+              mb: 3,
+              lineHeight: 1.2,
+              textTransform: 'uppercase',
+            
+              fontSize: { xs: '2rem', md: '3.5rem' },
+            }}
           >
-            WE STRIVE FOR QUALITY,<br />
-            AESTHETIC AND MIXING OUR<br />
-            SHARED PASSIONS
+            Adventure Gear at its Best
           </Typography>
-          <Typography variant="body1" sx={{ mb: 3, maxWidth: 600 }}>
-            For skateboarding, design, photography, & cinematography.
-            Our skateboards are produced with premium wood and designed in
-            collaboration by visual artists from around the world with
-            unique backgrounds.
+          <Typography
+            variant="body1"
+            sx={{
+              mb: 3,
+              maxWidth: { xs: '100%', md: 600 },
+              fontSize: { xs: '0.95rem', md: '1.1rem' },
+            }}
+          >
+            We blend performance and style to deliver premium outdoor gear. 
+            Whether you’re conquering rugged trails or enjoying a weekend escape, 
+            our collections are designed for the true adventurer.
           </Typography>
           <Button
+            component={Link}
+            to="/products"
             variant="contained"
             sx={{
               backgroundColor: '#000',
               color: '#fff',
+              textTransform: 'uppercase',
+              fontWeight: 'bold',
               borderRadius: 0,
-              px: 4,
-              py: 1.5,
+              px: { xs: 2, md: 4 },
+              py: { xs: 1, md: 1.5 },
               '&:hover': { backgroundColor: '#333' },
             }}
           >
-            Shop Now
+            Explore Gear
           </Button>
         </Box>
 
-        {/* Right Image (black & white) */}
-        <Box sx={{ flex: 1 }}>
-          <img
-            src={placeholderImg}
-            alt="Skateboard Lifestyle"
-            style={{
+        {/* RIGHT: Hero Image */}
+        <Box
+          sx={{
+            flex: 1,
+            
+            height: { xs: 'auto', md: '100vh' },
+            minHeight: { xs: 300, md: '100vh' },
+            overflow: 'hidden',
+          }}
+        >
+          <Box
+            component="img"
+            src={teamMember1}
+            alt="Adventure in Action"
+            sx={{
               width: '100%',
-              height: isMobile ? 'auto' : '80vh',
-              objectFit: 'cover',
-              filter: 'grayscale(100%)', // black & white
+             
+              maxHeight: { xs: 500, md: '100vh' },
+              height: '100%',
+             
+              objectFit: { xs: 'contain', md: 'cover' },
+              filter: 'grayscale(100%)',
             }}
           />
         </Box>
       </Box>
 
-      {/* 2) OUR STORY SECTION: black background, white text */}
+      {}
       <Box
         sx={{
           width: '100%',
           backgroundColor: '#000',
-          color: '#fff',
+          color: '#FFD600',
           textAlign: 'center',
           py: { xs: 6, md: 10 },
-          px: 2,
+          px: { xs: 2, md: 4 },
         }}
       >
-        <Typography variant="h2" sx={{ fontWeight: 'bold', mb: 1 }}>
+        <Typography
+          variant="h2"
+          sx={{
+            fontWeight: 'bold',
+            mb: 1,
+            fontSize: { xs: '2rem', md: '3rem' },
+          }}
+        >
           OUR STORY
-        </Typography>
-        <Typography variant="body1" sx={{ mb: 3 }}>
-          Spring 2021 Collection
         </Typography>
         <Typography
           variant="body1"
-          sx={{ maxWidth: 800, mx: 'auto', lineHeight: 1.7, mb: 4 }}
+          sx={{
+            mb: 3,
+            fontSize: { xs: '1rem', md: '1.2rem' },
+          }}
         >
-          Founded by a group of passionate creators, we believe that skateboarding
-          is more than a sport—it’s a way of life. Our mission is to empower
-          artists, photographers, and skaters alike, bringing together a
-          community of dreamers and doers.
+          The Journey Begins
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            maxWidth: 800,
+            mx: 'auto',
+            lineHeight: 1.7,
+            mb: 4,
+            fontSize: { xs: '0.9rem', md: '1rem' },
+          }}
+        >
+          Founded by passionate explorers and innovators, our brand was created out of the desire
+          to merge cutting-edge design with unbeatable durability. Each piece in our collection
+          is a testament to our commitment to quality and our relentless spirit of adventure.
         </Typography>
         <Button
           variant="outlined"
           sx={{
-            color: '#fff',
-            borderColor: '#fff',
+            color: '#FFD600',
+            borderColor: '#FFD600',
             borderRadius: 0,
-            px: 4,
-            py: 1.5,
+            px: { xs: 2, md: 4 },
+            py: { xs: 1, md: 1.5 },
             '&:hover': {
-              backgroundColor: '#fff',
+              backgroundColor: '#FFD600',
               color: '#000',
             },
           }}
@@ -119,47 +182,71 @@ export default function AboutUs() {
         </Button>
       </Box>
 
-      {/* 3) HALF IMAGE, HALF TEXT SECTION */}
+      {}
       <Box
         sx={{
           display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          minHeight: '70vh',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          flexDirection: { xs: 'column', md: 'row' },
+          width: '100%',
+          minHeight: { xs: 'auto', md: '70vh' },
         }}
       >
-        {/* Left Half: big black & white image */}
-        <Box sx={{ flex: 1 }}>
-          <img
-            src={placeholderImg}
-            alt="Half Section"
-            style={{
+        {/* LEFT: Grayscale Image */}
+        <Box
+          sx={{
+            flex: 1,
+            overflow: 'hidden',
+            height: { xs: 'auto', md: '70vh' },
+            minHeight: { xs: 300, md: '70vh' },
+          }}
+        >
+          <Box
+            component="img"
+            src={teamMember2}
+            alt="Premium Gear"
+            sx={{
               width: '100%',
-              height: isMobile ? 'auto' : '70vh',
-              objectFit: 'cover',
+              // For mobile, use contain to shrink if needed
+              objectFit: { xs: 'contain', md: 'cover' },
+              maxHeight: { xs: 500, md: '100%' },
+              height: '100%',
               filter: 'grayscale(100%)',
             }}
           />
         </Box>
 
-        {/* Right Half: white bg, black text */}
+        {/* RIGHT: White Background, Black Text */}
         <Box
           sx={{
             flex: 1,
             backgroundColor: '#fff',
             color: '#000',
             p: { xs: 3, md: 6 },
+            textAlign: { xs: 'center', md: 'left' },
           }}
         >
-          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 2 }}>
-            Premium Boards
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 'bold',
+              mb: 2,
+              fontSize: { xs: '1.5rem', md: '2rem' },
+            }}
+          >
+            Built for Adventure
           </Typography>
-          <Typography variant="body1" sx={{ mb: 3, maxWidth: 600 }}>
-            Our decks are made with premium wood, designed by visual artists
-            from around the globe, bridging the gap between functional skate
-            art and modern design. We want you to be part of this story,
-            whether cruising city streets or conquering the skatepark.
+          <Typography
+            variant="body1"
+            sx={{
+              mb: 3,
+              maxWidth: 600,
+              fontSize: { xs: '0.9rem', md: '1rem' },
+              mx: { xs: 'auto', md: 0 },
+            }}
+          >
+            Our gear is engineered to meet the rigorous demands of the great outdoors.
+            Every product we offer is crafted using premium materials and inspired by
+            the spirit of discovery. Join us on our mission to redefine adventure.
           </Typography>
           <Button
             variant="contained"
@@ -167,78 +254,95 @@ export default function AboutUs() {
               backgroundColor: '#000',
               color: '#fff',
               borderRadius: 0,
-              px: 4,
-              py: 1.5,
+              px: { xs: 3, md: 4 },
+              py: { xs: 1, md: 1.5 },
               '&:hover': { backgroundColor: '#333' },
             }}
           >
-            Shop Decks
+            Shop Now
           </Button>
         </Box>
       </Box>
 
-      {/* 4) TEAM SECTION */}
-      <Box sx={{ width: '100%', backgroundColor: '#f5f5f5', py: { xs: 6, md: 10 }, px: 2 }}>
-        <Typography variant="h3" align="center" sx={{ fontWeight: 'bold', mb: 4 }}>
+      {/******************************************************************
+       * TEAM SECTION
+       ******************************************************************/}
+      <Box
+        sx={{
+          width: '100%',
+          backgroundColor: '#f5f5f5',
+          py: { xs: 6, md: 10 },
+          px: { xs: 2, md: 4 },
+        }}
+      >
+        <Typography
+          variant="h3"
+          align="center"
+          sx={{
+            fontWeight: 'bold',
+            mb: 4,
+            fontSize: { xs: '1.8rem', md: '2.5rem' },
+          }}
+        >
           Our Team
         </Typography>
-        <Grid container spacing={0}>
-          {/* Card 1 */}
-          <Grid item xs={12} md={4}>
-            <Box sx={{ border: '1px solid #ccc', m: 0 }}>
-              <img
-                src={placeholderImg}
-                alt="Naveen"
-                style={{ width: '100%', height: 280, objectFit: 'cover' }}
-              />
-              <Box sx={{ p: 2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                  Naveen
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Founder & CEO
-                </Typography>
+
+        <Grid container spacing={2}>
+          {teamMembers.map((member, index) => (
+            <Grid item xs={12} md={4} key={index}>
+              <Box
+                sx={{
+                  border: '1px solid #ccc',
+                  boxShadow: 1,
+                  overflow: 'hidden',
+                  borderRadius: 1,
+                  height: '100%', // Let item fill available space
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Box sx={{ flex: '0 0 auto' }}>
+                  <Box
+                    component="img"
+                    src={member.image}
+                    alt={member.name}
+                    sx={{
+                      width: '100%',
+                      // Reduce maxHeight on mobile to avoid huge images
+                      maxHeight: { xs: 300, md: 320 },
+                      objectFit: 'cover',
+                      display: 'block',
+                    }}
+                  />
+                </Box>
+                <Box sx={{ flex: 1, p: { xs: 2, md: 3 } }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 'bold',
+                      fontSize: { xs: '1.2rem', md: '1.5rem' },
+                    }}
+                  >
+                    {member.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      fontSize: { xs: '0.9rem', md: '1rem' },
+                      mt: 0.5,
+                    }}
+                  >
+                    {member.role}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-          </Grid>
-          {/* Card 2 */}
-          <Grid item xs={12} md={4}>
-            <Box sx={{ border: '1px solid #ccc', m: 0 }}>
-              <img
-                src={placeholderImg}
-                alt="Venkata Mahesh"
-                style={{ width: '100%', height: 280, objectFit: 'cover' }}
-              />
-              <Box sx={{ p: 2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                  Venkata Mahesh
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Head of Product
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-          {/* Card 3 */}
-          <Grid item xs={12} md={4}>
-            <Box sx={{ border: '1px solid #ccc', m: 0 }}>
-              <img
-                src={placeholderImg}
-                alt="Shrishika Ramaiah"
-                style={{ width: '100%', height: 280, objectFit: 'cover' }}
-              />
-              <Box sx={{ p: 2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                  Shrishika Ramaiah
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Human Resources
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
+            </Grid>
+          ))}
         </Grid>
       </Box>
     </Box>
   );
-}
+};
+
+export default AboutUs;

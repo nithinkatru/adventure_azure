@@ -1,8 +1,3 @@
-// src/components/admin/AdminUsers.jsx
-/*****************************************************************
- * AdminUsers.jsx
- * Black & Yellow Montserrat UI via AdminLayout
- *****************************************************************/
 import React, { useEffect, useState } from 'react';
 import AdminLayout from './AdminLayout';
 import {
@@ -26,6 +21,8 @@ import {
   TextField,
   Toolbar,
   Typography,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -33,7 +30,7 @@ import {
   Edit as EditIcon,
   Search as SearchIcon,
 } from '@mui/icons-material';
-import { getAdminUsers, deleteUser } from '../api';
+import { getAdminUsers, deleteUser, addUser } from '../api';
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -45,7 +42,16 @@ export default function AdminUsers() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [targetId, setTargetId] = useState(null);
 
-  // Fetch data
+  // State for Add User Dialog
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [newUser, setNewUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role: 'user',
+  });
+
+  // Fetch data from the backend
   const fetchData = async () => {
     setBusy(true);
     try {
@@ -57,15 +63,17 @@ export default function AdminUsers() {
       setBusy(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  // Delete
+  // Delete user handler
   const askDelete = (id) => {
     setTargetId(id);
     setConfirmOpen(true);
   };
+
   const doDelete = async () => {
     setConfirmOpen(false);
     if (targetId) {
@@ -74,7 +82,20 @@ export default function AdminUsers() {
     }
   };
 
-  // Filter + paginate
+  // Handle Add User
+  const handleAddUser = async () => {
+    try {
+      await addUser(newUser);
+      setAddDialogOpen(false);
+      // Reset form data
+      setNewUser({ name: '', email: '', password: '', role: 'user' });
+      fetchData();
+    } catch (err) {
+      alert(err.message || 'Failed to add user');
+    }
+  };
+
+  // Filter and paginate users
   const filtered = users.filter(
     (u) =>
       u.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -82,7 +103,6 @@ export default function AdminUsers() {
   );
   const slice = filtered.slice(page * rows, page * rows + rows);
 
-  // Loading
   if (busy) {
     return (
       <AdminLayout title="Users">
@@ -101,7 +121,6 @@ export default function AdminUsers() {
           <Typography variant="h4" sx={{ mb: { xs: 1, sm: 0 } }}>
             Manage Users
           </Typography>
-
           <Box sx={{ display: 'flex', gap: 1 }}>
             <TextField
               size="small"
@@ -135,10 +154,10 @@ export default function AdminUsers() {
                 },
               }}
             />
-
             <Button
               variant="contained"
               startIcon={<AddIcon />}
+              onClick={() => setAddDialogOpen(true)}
               sx={{
                 bgcolor: '#FFD700',
                 color: '#000',
@@ -160,7 +179,7 @@ export default function AdminUsers() {
           </Typography>
         )}
 
-        {/* Table */}
+        {/* Users Table */}
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Paper sx={{ width: '100%', maxWidth: 1000 }}>
             <TableContainer>
@@ -181,7 +200,6 @@ export default function AdminUsers() {
                     ))}
                   </TableRow>
                 </TableHead>
-
                 <TableBody>
                   {slice.map((u) => (
                     <TableRow
@@ -238,7 +256,6 @@ export default function AdminUsers() {
                 </TableBody>
               </Table>
             </TableContainer>
-
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
@@ -263,52 +280,57 @@ export default function AdminUsers() {
         </Box>
 
         {/* Confirm Delete Dialog */}
-        <Dialog
-          open={confirmOpen}
-          onClose={() => setConfirmOpen(false)}
-          PaperProps={{
-            sx: {
-              p: 2,
-              borderRadius: 0,
-              border: '1px solid #ccc',
-            },
-          }}
-        >
-          <DialogTitle sx={{ fontWeight: 'bold' }}>Confirm Delete</DialogTitle>
+        <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)}>
+          <DialogTitle>Confirm Delete</DialogTitle>
           <DialogContent>
-            <Typography>
-              Are you sure you want to delete this user?
-            </Typography>
+            <Typography>Are you sure you want to delete this user?</Typography>
           </DialogContent>
           <DialogActions>
-            <Button
-              onClick={() => setConfirmOpen(false)}
-              sx={{
-                borderRadius: 0,
-                border: '1px solid #000',
-                color: '#000',
-                bgcolor: '#fff',
-                '&:hover': {
-                  bgcolor: '#f9f9f9',
-                },
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={doDelete}
-              sx={{
-                borderRadius: 0,
-                border: '1px solid #f44336',
-                color: '#fff',
-                bgcolor: '#f44336',
-                '&:hover': {
-                  bgcolor: '#e53935',
-                },
-              }}
-              autoFocus
-            >
+            <Button onClick={() => setConfirmOpen(false)}>Cancel</Button>
+            <Button onClick={doDelete} color="error" variant="contained">
               Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Add User Dialog */}
+        <Dialog open={addDialogOpen} onClose={() => setAddDialogOpen(false)}>
+          <DialogTitle>Add New User</DialogTitle>
+          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextField
+              label="Name"
+              value={newUser.name}
+              onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+            />
+            <TextField
+              label="Email"
+              value={newUser.email}
+              onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+            />
+            <TextField
+              label="Password"
+              type="password"
+              value={newUser.password}
+              onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+            />
+            <Select
+              value={newUser.role}
+              onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+              fullWidth
+              displayEmpty
+              sx={{ mt: 1 }}
+            >
+              <MenuItem value="" disabled>
+                Select Role
+              </MenuItem>
+              <MenuItem value="user">User</MenuItem>
+              <MenuItem value="admin">Admin</MenuItem>
+            </Select>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setAddDialogOpen(false)}>Cancel</Button>
+            <Button variant="contained" onClick={handleAddUser}>
+              Add
             </Button>
           </DialogActions>
         </Dialog>

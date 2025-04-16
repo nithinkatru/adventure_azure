@@ -29,12 +29,12 @@ import {
 import { styled, ThemeProvider } from '@mui/material/styles';
 import { logoutUser } from '../api';
 import profilePic from '../assets/profile.jpeg';
-import { adminTheme } from './adminTheme'; // Your custom theme
+import { adminTheme } from './adminTheme'; 
 
-// Set a reduced drawer width (e.g., 150px)
+
 const drawerWidth = 150;
 
-// Define the main content area to be offset by the drawer's width
+
 const Main = styled('main')(({ theme }) => ({
   flexGrow: 1,
   marginLeft: drawerWidth,

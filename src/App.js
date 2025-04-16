@@ -36,17 +36,15 @@ import Footer from './components/common/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 import { getToken } from './components/services/authService';
 
-/* ========================================================= */
-/*  Inner component so we can use useLocation()               */
-/* ========================================================= */
+
 const AppContent = () => {
   const location = useLocation();
 
-  // Cart badge state
+
   const [cartCount, setCartCount] = useState(0);
   const handleCartUpdate = (count) => setCartCount(count);
 
-  // Check if current user is admin from stored token
+
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     const token = getToken();
@@ -60,7 +58,7 @@ const AppContent = () => {
     }
   }, [location]);
 
-  // Routes to decide when to hide NavBar and Footer
+  
   const adminRoutes = [
     '/admin/dashboard',
     '/admin/products',
@@ -113,9 +111,7 @@ const AppContent = () => {
   );
 };
 
-/* ========================================================= */
-/*  Root component                                            */
-/* ========================================================= */
+
 export default function App() {
   return (
     <Router>
