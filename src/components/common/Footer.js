@@ -3,10 +3,14 @@ import React from 'react';
 import emailjs from 'emailjs-com';
 import { Box, Container, Grid, Typography, TextField, Button, IconButton, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
-
-import { Facebook as FacebookIcon, Twitter as TwitterIcon, Instagram as InstagramIcon, YouTube as YouTubeIcon } from '@mui/icons-material';
-
+import {
+  Facebook as FacebookIcon,
+  Twitter as TwitterIcon,
+  Instagram as InstagramIcon,
+  YouTube as YouTubeIcon
+} from '@mui/icons-material';
 import { FaCcAmex, FaCcPaypal, FaCcMastercard, FaCcVisa, FaCcApplePay } from 'react-icons/fa';
+
 const languages = ['English', 'French', 'Spanish'];
 const currencies = ['USD ($)', 'CAD ($)', 'EUR (€)'];
 
@@ -22,12 +26,11 @@ function Footer() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    
     console.log("Sending email with:", email);
 
-    
+    // Using your provided IDs
     emailjs
-      .sendForm('service_rxsdisf', 'template_2h4r8px', e.target, 'QW5CR258H0cK2wy7N')
+      .sendForm('service_2hd1blm', 'template_2ecwpsj', e.target, 'YtIkzBR-lo3nRT-Xe')
       .then(
         (result) => {
           console.log('Email sent successfully:', result.text);
@@ -49,40 +52,40 @@ function Footer() {
         <Grid container spacing={4}>
           {/* ABOUT THE STORE */}
           <Grid item xs={12} md={3}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, fontFamily: 'Montserrat, sans-serif' }}>
               ABOUT THE STORE
             </Typography>
-            <Typography variant="body2" sx={{ mb: 2, lineHeight: 1.6 }}>
+            <Typography variant="body2" sx={{ mb: 2, lineHeight: 1.6, fontFamily: 'Montserrat, sans-serif' }}>
               At Adventure Hub, we offer a curated selection of high‑quality adventure gear and apparel built for explorers and thrill‑seekers.
               Our products combine durability with cutting‑edge design for every expedition.
             </Typography>
-            <Typography variant="body2" sx={{ mb: 2, lineHeight: 1.6 }}>
+            <Typography variant="body2" sx={{ mb: 2, lineHeight: 1.6, fontFamily: 'Montserrat, sans-serif' }}>
               Driven by a passion for exploration, performance, and style – we ensure you’re always ready for the great outdoors.
             </Typography>
-            <Typography variant="h5" sx={{ fontWeight: 'bold', mt: 2 }}>
+            <Typography variant="h5" sx={{ fontWeight: 'bold', mt: 2, fontFamily: 'Montserrat, sans-serif' }}>
               Adventure Hub
             </Typography>
           </Grid>
 
           {/* SHOP */}
           <Grid item xs={12} md={2}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, fontFamily: 'Montserrat, sans-serif' }}>
               SHOP
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Link to="/products" style={{ textDecoration: 'none', color: '#000' }}>
+              <Link to="/products" style={{ textDecoration: 'none', color: '#000', fontFamily: 'Arial, sans-serif' }}>
                 All Products
               </Link>
-              <Link to="/departments" style={{ textDecoration: 'none', color: '#000' }}>
+              <Link to="/departments" style={{ textDecoration: 'none', color: '#000', fontFamily: 'Arial, sans-serif' }}>
                 Departments
               </Link>
-              <Link to="/sale" style={{ textDecoration: 'none', color: '#000' }}>
+              <Link to="/sale" style={{ textDecoration: 'none', color: '#000', fontFamily: 'Arial, sans-serif' }}>
                 Sale
               </Link>
-              <Link to="/picks" style={{ textDecoration: 'none', color: '#000' }}>
+              <Link to="/picks" style={{ textDecoration: 'none', color: '#000', fontFamily: 'Arial, sans-serif' }}>
                 Our Picks
               </Link>
-              <Link to="/new-arrivals" style={{ textDecoration: 'none', color: '#000' }}>
+              <Link to="/new-arrivals" style={{ textDecoration: 'none', color: '#000', fontFamily: 'Arial, sans-serif' }}>
                 New Arrivals
               </Link>
             </Box>
@@ -90,23 +93,23 @@ function Footer() {
 
           {/* ABOUT */}
           <Grid item xs={12} md={2}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, fontFamily: 'Montserrat, sans-serif' }}>
               ABOUT
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Link to="/blog" style={{ textDecoration: 'none', color: '#000' }}>
+              <Link to="/blog" style={{ textDecoration: 'none', color: '#000', fontFamily: 'Arial, sans-serif' }}>
                 Blog
               </Link>
-              <Link to="/search" style={{ textDecoration: 'none', color: '#000' }}>
+              <Link to="/search" style={{ textDecoration: 'none', color: '#000', fontFamily: 'Arial, sans-serif' }}>
                 Search
               </Link>
-              <Link to="/about-us" style={{ textDecoration: 'none', color: '#000' }}>
+              <Link to="/about-us" style={{ textDecoration: 'none', color: '#000', fontFamily: 'Arial, sans-serif' }}>
                 About Us
               </Link>
-              <Link to="/contact" style={{ textDecoration: 'none', color: '#000' }}>
+              <Link to="/contact" style={{ textDecoration: 'none', color: '#000', fontFamily: 'Arial, sans-serif' }}>
                 Contact Us
               </Link>
-              <Link to="/faqs" style={{ textDecoration: 'none', color: '#000' }}>
+              <Link to="/faqs" style={{ textDecoration: 'none', color: '#000', fontFamily: 'Arial, sans-serif' }}>
                 FAQs
               </Link>
             </Box>
@@ -114,17 +117,18 @@ function Footer() {
 
           {/* NEWSLETTER */}
           <Grid item xs={12} md={3}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2, fontFamily: 'Montserrat, sans-serif' }}>
               NEWSLETTER
             </Typography>
-            <Typography variant="body2" sx={{ mb: 2, lineHeight: 1.6 }}>
+            <Typography variant="body2" sx={{ mb: 2, lineHeight: 1.6, fontFamily: 'Montserrat, sans-serif' }}>
               Sign up for exclusive offers, adventure tips, inspiring stories, events, and more.
             </Typography>
+            {/* The subscription form */}
             <form onSubmit={handleSubmit}>
               <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
                 <TextField
                   variant="outlined"
-                  placeholder="Your email"
+                  placeholder="address@example.com"
                   size="small"
                   name="user_email"
                   value={email}
@@ -135,10 +139,14 @@ function Footer() {
                 <Button type="submit" variant="contained" sx={{ bgcolor: '#000', color: '#fff' }}>
                   Subscribe
                 </Button>
+                {/* Hidden fields to pass required template parameters */}
+                <input type="hidden" name="title" value="Contact Us" />
+                <input type="hidden" name="name" value="Adventure Hub" />
+                <input type="hidden" name="email" value="replyto@example.com" />
               </Box>
             </form>
             {subscribed && (
-              <Typography variant="body2" sx={{ color: 'green' }}>
+              <Typography variant="body2" sx={{ color: 'green', fontFamily: 'Montserrat, sans-serif' }}>
                 Thanks for subscribing!
               </Typography>
             )}
@@ -181,10 +189,10 @@ function Footer() {
             variant="standard"
             value={currency}
             onChange={handleCurrencyChange}
-            sx={{ minWidth: 80 }}
+            sx={{ minWidth: 80, fontFamily: 'Montserrat, sans-serif' }}
           >
             {currencies.map((item) => (
-              <MenuItem key={item} value={item}>
+              <MenuItem key={item} value={item} sx={{ fontFamily: 'Montserrat, sans-serif' }}>
                 {item}
               </MenuItem>
             ))}
@@ -194,10 +202,10 @@ function Footer() {
             variant="standard"
             value={language}
             onChange={handleLanguageChange}
-            sx={{ minWidth: 80 }}
+            sx={{ minWidth: 80, fontFamily: 'Montserrat, sans-serif' }}
           >
             {languages.map((lang) => (
-              <MenuItem key={lang} value={lang}>
+              <MenuItem key={lang} value={lang} sx={{ fontFamily: 'Montserrat, sans-serif' }}>
                 {lang}
               </MenuItem>
             ))}
@@ -224,7 +232,7 @@ function Footer() {
         </Box>
 
         {/* Footer Text */}
-        <Typography variant="body2" sx={{ mt: { xs: 2, md: 0 } }}>
+        <Typography variant="body2" sx={{ mt: { xs: 2, md: 0 }, fontFamily: 'Montserrat, sans-serif' }}>
           © 2025 Adventure Hub. All rights reserved.
         </Typography>
       </Box>

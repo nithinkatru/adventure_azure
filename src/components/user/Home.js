@@ -22,7 +22,6 @@ import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import '../styles/Home.css';
 
-
 import heroImg from '../assets/home.jpg'; 
 import equipmentImg from '../assets/productssubcatergory.jpg'; 
 import apparelImg from '../assets/apparel.jpg'; 
@@ -31,9 +30,7 @@ import featuredImg2 from '../assets/highlightImg1.jpg';
 import featuredImg3 from '../assets/bikingGear.jpg'; 
 import sampleVideo from '../assets/sampleVideo.mp4'; 
 
-
 import ScrollingMarquee from './Home/ScrollingMarquee';
-
 
 const fullWidthBoxStyle = {
   width: '100vw',
@@ -51,7 +48,7 @@ const Home = () => {
       {/* Outer container enforces edge‑to‑edge layout */}
       <Box className="home-page" sx={fullWidthBoxStyle}>
 
-        {}
+        {/* ====================== HERO SECTION ====================== */}
         <Box
           sx={{
             position: 'relative',
@@ -120,9 +117,10 @@ const Home = () => {
                 justifyContent: 'center',
               }}
             >
+              {/* Redirect to /products for both buttons */}
               <Button
                 component={Link}
-                to="/products/equipment"
+                to="/products"
                 variant="contained"
                 sx={{
                   backgroundColor: '#000',
@@ -143,7 +141,7 @@ const Home = () => {
               </Button>
               <Button
                 component={Link}
-                to="/products/new-arrivals"
+                to="/products"
                 variant="contained"
                 sx={{
                   backgroundColor: '#000',
@@ -166,7 +164,7 @@ const Home = () => {
           </Box>
         </Box>
 
-        {}
+        {/* ================== EQUIPMENT & APPAREL SECTION ================== */}
         <Box sx={{ backgroundColor: '#fff', py: { xs: 4, md: 8 }, width: '100%' }}>
           <Grid container spacing={3}>
             {/* EQUIPMENT */}
@@ -180,53 +178,56 @@ const Home = () => {
                 overflow: 'hidden',
               }}
             >
-              <Box
-                component="img"
-                src={equipmentImg}
-                alt="Equipment"
-                sx={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                }}
-              />
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: '10%',
-                  left: '5%',
-                  bgcolor: 'rgba(255,255,255,0.8)',
-                  p: 1,
-                  borderRadius: 1,
-                }}
-              >
-                <Typography
-                  variant="h4"
+              {/* Entire block is clickable */}
+              <Link to="/products" style={{ display: 'block', height: '100%' }}>
+                <Box
+                  component="img"
+                  src={equipmentImg}
+                  alt="Equipment"
                   sx={{
-                    fontWeight: 'bold',
-                    mb: 1,
-                    color: '#000',
-                    fontSize: { xs: '1.2rem', md: '1.8rem' },
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    bottom: '10%',
+                    left: '5%',
+                    bgcolor: 'rgba(255,255,255,0.8)',
+                    p: 1,
+                    borderRadius: 1,
                   }}
                 >
-                  Equipment
-                </Typography>
-                <Button
-                  component={Link}
-                  to="/products/equipment"
-                  sx={{
-                    textDecoration: 'none',
-                    color: '#000',
-                    fontSize: { xs: '0.8rem', md: '1rem' },
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Shop Now
-                </Button>
-              </Box>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: 'bold',
+                      mb: 1,
+                      color: '#000',
+                      fontSize: { xs: '1.2rem', md: '1.8rem' },
+                    }}
+                  >
+                    Equipment
+                  </Typography>
+                  <Button
+                    component={Link}
+                    to="/products"
+                    sx={{
+                      textDecoration: 'none',
+                      color: '#000',
+                      fontSize: { xs: '0.8rem', md: '1rem' },
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Shop Now
+                  </Button>
+                </Box>
+              </Link>
             </Grid>
 
-            {/* ADVENTURE APPAREL */}
+            {/* APPAREL */}
             <Grid
               item
               xs={12}
@@ -237,60 +238,63 @@ const Home = () => {
                 overflow: 'hidden',
               }}
             >
-              <Box
-                component="img"
-                src={apparelImg}
-                alt="Apparel"
-                sx={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                }}
-              />
-              <Box
-                sx={{
-                  position: 'absolute',
-                  bottom: '10%',
-                  left: '5%',
-                  bgcolor: 'rgba(255,255,255,0.8)',
-                  p: 1,
-                  borderRadius: 1,
-                }}
-              >
-                <Typography
-                  variant="h4"
+              {/* Entire block is clickable */}
+              <Link to="/products" style={{ display: 'block', height: '100%' }}>
+                <Box
+                  component="img"
+                  src={apparelImg}
+                  alt="Apparel"
                   sx={{
-                    fontWeight: 'bold',
-                    mb: 1,
-                    color: '#000',
-                    fontSize: { xs: '1.2rem', md: '1.8rem' },
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    bottom: '10%',
+                    left: '5%',
+                    bgcolor: 'rgba(255,255,255,0.8)',
+                    p: 1,
+                    borderRadius: 1,
                   }}
                 >
-                  Apparel
-                </Typography>
-                <Button
-                  component={Link}
-                  to="/products/apparel"
-                  sx={{
-                    textDecoration: 'none',
-                    color: '#000',
-                    fontSize: { xs: '0.8rem', md: '1rem' },
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Shop Now
-                </Button>
-              </Box>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: 'bold',
+                      mb: 1,
+                      color: '#000',
+                      fontSize: { xs: '1.2rem', md: '1.8rem' },
+                    }}
+                  >
+                    Apparel
+                  </Typography>
+                  <Button
+                    component={Link}
+                    to="/products"
+                    sx={{
+                      textDecoration: 'none',
+                      color: '#000',
+                      fontSize: { xs: '0.8rem', md: '1rem' },
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Shop Now
+                  </Button>
+                </Box>
+              </Link>
             </Grid>
           </Grid>
         </Box>
 
-        {}
+        {/* ====================== SCROLLING MARQUEE ====================== */}
         <Box sx={{ width: '100%' }}>
           <ScrollingMarquee />
         </Box>
 
-        {}
+        {/* ======================= FEATURED GEAR ======================= */}
         <Box sx={{ textAlign: 'center', py: { xs: 4, md: 8 }, width: '100%' }}>
           <Box sx={{ mt: 4 }}>
             <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1, fontSize: { xs: '1.5rem', md: '2rem' } }}>
@@ -298,7 +302,7 @@ const Home = () => {
             </Typography>
             <Button
               component={Link}
-              to="/products/featured"
+              to="/products"
               sx={{
                 textDecoration: 'none',
                 color: '#000',
@@ -311,16 +315,8 @@ const Home = () => {
             </Button>
           </Box>
 
-          <Box
-            sx={{
-              position: 'relative',
-              width: '100%',
-              maxWidth: '1200px',
-              mx: 'auto',
-              mt: 4,
-            }}
-          >
-            {/* Left Navigation Arrow */}
+          <Box sx={{ position: 'relative', width: '100%', maxWidth: '1200px', mx: 'auto', mt: 4 }}>
+            {/* Left Navigation Arrow (If you're implementing carousel logic later) */}
             <IconButton
               sx={{
                 position: 'absolute',
@@ -348,17 +344,20 @@ const Home = () => {
                   textAlign: 'center',
                 }}
               >
-                <Box
-                  component="img"
-                  src={featuredImg1}
-                  alt="Gear 1"
-                  sx={{
-                    width: '100%',
-                    maxWidth: '200px',
-                    height: 'auto',
-                    display: 'block',
-                  }}
-                />
+                <Link to="/products">
+                  <Box
+                    component="img"
+                    src={featuredImg1}
+                    alt="Gear 1"
+                    sx={{
+                      width: '100%',
+                      maxWidth: '200px',
+                      height: 'auto',
+                      display: 'block',
+                      cursor: 'pointer',
+                    }}
+                  />
+                </Link>
               </Grid>
               <Grid
                 item
@@ -370,17 +369,20 @@ const Home = () => {
                   textAlign: 'center',
                 }}
               >
-                <Box
-                  component="img"
-                  src={featuredImg2}
-                  alt="Gear 2"
-                  sx={{
-                    width: '100%',
-                    maxWidth: '200px',
-                    height: 'auto',
-                    display: 'block',
-                  }}
-                />
+                <Link to="/products">
+                  <Box
+                    component="img"
+                    src={featuredImg2}
+                    alt="Gear 2"
+                    sx={{
+                      width: '100%',
+                      maxWidth: '200px',
+                      height: 'auto',
+                      display: 'block',
+                      cursor: 'pointer',
+                    }}
+                  />
+                </Link>
               </Grid>
               <Grid
                 item
@@ -392,21 +394,24 @@ const Home = () => {
                   textAlign: 'center',
                 }}
               >
-                <Box
-                  component="img"
-                  src={featuredImg3}
-                  alt="Gear 3"
-                  sx={{
-                    width: '100%',
-                    maxWidth: '200px',
-                    height: 'auto',
-                    display: 'block',
-                  }}
-                />
+                <Link to="/products">
+                  <Box
+                    component="img"
+                    src={featuredImg3}
+                    alt="Gear 3"
+                    sx={{
+                      width: '100%',
+                      maxWidth: '200px',
+                      height: 'auto',
+                      display: 'block',
+                      cursor: 'pointer',
+                    }}
+                  />
+                </Link>
               </Grid>
             </Grid>
 
-            {/* Right Navigation Arrow */}
+            {/* Right Navigation Arrow (If you're implementing carousel logic later) */}
             <IconButton
               sx={{
                 position: 'absolute',
@@ -425,13 +430,13 @@ const Home = () => {
           </Box>
         </Box>
 
-        {}
+        {/* ================== GEAR UP FOR ADVENTURE SECTION ================== */}
         <Box
           sx={{
             display: 'flex',
             backgroundColor: '#FFD700',
             mt: 4,
-            minHeight: { xs: '400px', md: '500px' },
+            // Removed minHeight to let the content define the height
             width: '100%',
             flexDirection: { xs: 'column', md: 'row' },
           }}
@@ -474,25 +479,30 @@ const Home = () => {
                 textTransform: 'uppercase',
                 fontWeight: 'bold',
                 borderRadius: 0,
+                // Reduce horizontal padding and set a maxWidth so the button is smaller
                 px: 2,
                 py: 1,
+                maxWidth: '150px',
                 boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
                 '&:hover': {
                   backgroundColor: '#333',
                   boxShadow: '0 6px 12px rgba(0,0,0,0.25)',
                 },
+                mt: 2,
               }}
             >
               Shop Now
             </Button>
           </Box>
+
           {/* Video Section */}
           <Box
             sx={{
               flex: 1,
               position: 'relative',
               overflow: 'hidden',
-              height: { xs: '300px', md: '100%' },
+              // Force the video to fill this side
+              height: '100%',
             }}
           >
             <Box
@@ -510,8 +520,6 @@ const Home = () => {
           </Box>
         </Box>
 
-        {}
-        {}
       </Box>
     </>
   );
